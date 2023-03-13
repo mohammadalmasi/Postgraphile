@@ -1,0 +1,51 @@
+CREATE USER demouser WITH ENCRYPTED PASSWORD 'demo123!';
+ALTER ROLE demouser WITH CREATEDB;
+GRANT ALL PRIVILEGES ON DATABASE postgres TO demouser;
+GRANT ALL ON schema public TO demouser;
+-------------------
+CREATE DATABASE demo;
+CREATE DATABASE
+
+DROP DATABASE demo;
+-------------------
+CREATE TABLE IF NOT EXISTS Account (
+  Id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  Name varchar(450) NOT NULL,
+  Street varchar(450) NOT NULL,
+  PostalCode INTEGER NOT NULL,
+  City varchar(450) NOT NULL
+);
+COMMENT ON TABLE Account IS 'This is Account table.';
+COMMENT ON COLUMN Account.Id IS 'The primary unique identifier for the Account';
+COMMENT ON COLUMN Account.Name IS 'This is the Name of the Account';
+COMMENT ON COLUMN Account.Street IS 'This is the Street of the Account';
+COMMENT ON COLUMN Account.PostalCode IS 'This is the PostalCode of the Account';
+COMMENT ON COLUMN Account.City IS 'This is the City of the Account';
+-------------------
+CREATE TABLE IF NOT EXISTS Contact (
+  Id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  AccountId INTEGER NOT NULL,
+  Firstname varchar(450) NOT NULL,
+  Lastname varchar(450) NOT NULL,
+  CONSTRAINT fk_account_contact
+  FOREIGN KEY(AccountId) 
+  REFERENCES Account(Id));
+COMMENT ON TABLE Contact IS 'This is Contact table.';
+COMMENT ON COLUMN Contact.Id IS 'The primary unique identifier for the Contact';
+COMMENT ON COLUMN Contact.AccountId IS 'This is the foreign key of the Account';
+COMMENT ON COLUMN Contact.Firstname IS 'The Firstname of the Contact';
+COMMENT ON COLUMN Contact.Lastname IS 'The Lastname of the Contact';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
