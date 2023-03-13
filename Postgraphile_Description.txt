@@ -1,0 +1,129 @@
+https://www.youtube.com/watch?v=eDZO8z1qw3k
+https://www.youtube.com/watch?v=rCMh7srOqvw&list=RDCMUCzgkOWKcwy0uhYilE6bd1Lg
+
+
+------------------------------Open cmd
+npm i postgraphile
+npm i @graphile-contrib/pg-simplify-inflector
+npm i postgraphile-plugin-connection-filter
+
+------------------------------Open cmd
+postgraphile -c postgres://demouser:demo123!@localhost:5432/demo --watch --enhance-graphiql --dynamic-json
+
+postgraphile -c postgres://demouser:demo123!@localhost:5432/demo --enhance-graphiql --allow-explain
+
+
+--append-plugins postgraphile-plugin-connection-filter,@graphile-contrib/pg-simplify-inflector --owner-connection postgres:///demo
+postgraphile -c postgres://demouser:demo123!@localhost:5432/demo --watch --enhance-graphiql --allow-explain --append-plugins postgraphile-plugin-connection-filter,@graphile-contrib/pg-simplify-inflector --owner-connection postgres:///demo
+
+
+**
+simplify the names the names are shoter instead of allAccounts ==> accounts when use pg-simplify-inflector plugins
+
+
+
+------------------------------
+query allAccounts {
+  accounts {
+    nodes {
+      nodeId
+      id
+      name
+      street
+      postalcode
+      city
+    }
+  }
+}
+
+query allAccounts {
+  accounts(orderBy: PRIMARY_KEY_ASC) {
+    nodes {
+      nodeId
+      id
+      name
+      street
+      postalcode
+      city
+    }
+  }
+}
+
+query allAccounts {
+  accounts(orderBy: PRIMARY_KEY_ASC, condition: { id: 7 }) {
+    nodes {
+      nodeId
+      id
+      name
+      street
+      postalcode
+      city
+    }
+  }
+}
+------------------------------
+mutation createAccount {
+  createAccount(
+    input: {
+      account: {
+        name: "Mohammad"
+        street: "Neuerieser st"
+        postalcode: 9404
+        city: "Passau"
+      }
+    }
+  ) {
+    account {
+      id
+    }
+  }
+}
+------------------------------
+mutation updateAccount {
+  updateAccount(input: { id: 3, patch: { name: "Tom" } }) {
+    account {
+      id
+      name
+    }
+  }
+}
+------------------------------
+mutation deleteAccount {
+  deleteAccount(input: { id: 3 }) {
+    account {
+      id
+    }
+  }
+}
+------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
